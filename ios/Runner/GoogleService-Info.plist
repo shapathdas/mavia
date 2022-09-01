@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>884685306955-m16c4qbvi2vuaup4q7dgtcv1sb1nofim.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.884685306955-m16c4qbvi2vuaup4q7dgtcv1sb1nofim</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>884685306955-aj05u381v0uds3mk2rmbc1ct9d31e5hs.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCtrUiF4JbKyvVPCM3sYi2yesYgumpOYmA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>884685306955</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mycompany.mavia</string>
+	<key>PROJECT_ID</key>
+	<string>mavia-1</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mavia-1.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:884685306955:ios:a695033464e0736a3761ce</string>
+</dict>
+</plist>

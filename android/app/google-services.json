@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "884685306955",
+    "project_id": "mavia-1",
+    "storage_bucket": "mavia-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884685306955:android:7a8554307ef6e77e3761ce",
+        "android_client_info": {
+          "package_name": "com.mycompany.mavia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884685306955-aj05u381v0uds3mk2rmbc1ct9d31e5hs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.mavia",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "884685306955-f27ngiupkdvk4dhj6nvdijr07a1mhcbi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzxqlfWewr2s_ONp0iTXZBb6oEHZ4TkRM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884685306955-f27ngiupkdvk4dhj6nvdijr07a1mhcbi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "884685306955-m16c4qbvi2vuaup4q7dgtcv1sb1nofim.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.mavia"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
