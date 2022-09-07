@@ -66,6 +66,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                 showControls: true,
                 allowFullScreen: true,
                 allowPlaybackSpeedMenu: false,
+
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
@@ -80,7 +81,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                   onPressed: () async {
                     logFirebaseEvent('PLAYER_COMP_BUTTON_BTN_ON_TAP');
                     logFirebaseEvent('Button_Navigate-To');
-                    context.pushNamed('videoList');
+                    context.pushNamed('HomePage');
                   },
                   text: 'Button',
                   options: FFButtonOptions(

@@ -1,8 +1,14 @@
 import 'package:chewie/chewie.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mavia/flutter_flow/flutter_flow_util.dart';
 import 'package:video_player/video_player.dart';
+
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 const kDefaultAspectRatio = 16 / 9;
 
@@ -122,6 +128,33 @@ class _FlutterFlowVideoPlayerState extends State<FlutterFlowVideoPlayer> {
             });
           }
         });
+      }
+      if (_videoPlayerController!.value.isPlaying) {
+        //final docUser = FirebaseFirestore.instance.collection('User').doc('myActivity');
+        //docUser.update({'eTime': getCurrentTimestamp,});
+
+        //final currentUser = FirebaseAuth.instance.currentUser;
+        //if (currentUser != null)
+          //usersRef.add(currentUser.uid);
+        //var collection = FirebaseFirestore.instance.collection('User');
+        //collection.doc('myActivity')
+        //.update({'eTime' : 'value'})
+        //.then((_) => print('Updated'))
+        //.catchError((error) => print ('Update failed: $error'));
+        //currentUserReference!.update('User');
+
+        //buttonMyActivityRecord!.reference.update(myActivityUpdateData);
+        final videoUpdateData = createVideoRecordData(
+          title: 'Moon flight',
+        );
+        //vref: _videoPlayerController!.dataSource;
+        //vRef: VideoRecord.reference
+        VideoRecord.collection.doc().update(videoUpdateData);
+        //final userUpdateData = createUserRecordData(
+          //createdTime: getCurrentTimestamp,
+        //);
+
+
       }
     });
 
