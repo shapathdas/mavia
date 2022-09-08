@@ -89,7 +89,7 @@ class _MusicWidgetState extends State<MusicWidget> {
                           audio: Audio.network(
                             'https://filesamples.com/samples/audio/mp3/sample3.mp3',
                             metas: Metas(
-                              id: 'sample3.mp3-6657l886',
+                              id: 'sample3.mp3-671pgr7a',
                             ),
                           ),
                           titleTextStyle:
