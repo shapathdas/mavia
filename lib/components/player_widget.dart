@@ -65,6 +65,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                 looping: true,
                 showControls: true,
                 allowFullScreen: true,
+
                 allowPlaybackSpeedMenu: true,
               ),
               Padding(
@@ -82,7 +83,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                     logFirebaseEvent('Button_Close-Dialog,-Drawer,-Etc');
                     Navigator.pop(context);
                     logFirebaseEvent('Button_Navigate-To');
-                    context.pushNamed('videoList');
+                    context.pushNamed('HomePage');
                   },
                   text: 'Button',
                   options: FFButtonOptions(
