@@ -143,7 +143,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                         return FFButtonWidget(
                           onPressed: () async {
                             logFirebaseEvent(
-                                'VIDEO_PAGE_MY_ACTIVITY_BTN_ON_TAP');
+                                'VIDEO_PAGE_Y_Y_Y_Y_TAB_BTN_ON_TAP');
                             logFirebaseEvent('Button_Backend-Call');
 
                             final myActivityUpdateData =
@@ -154,7 +154,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                             await buttonMyActivityRecord!.reference
                                 .update(myActivityUpdateData);
                           },
-                          text: 'myActivity',
+                          text: 'YYYYTab',
                           options: FFButtonOptions(
                             width: 130,
                             height: 40,
@@ -232,7 +232,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                           return FFButtonWidget(
                             onPressed: () async {
                               logFirebaseEvent(
-                                  'VIDEO_PAGE_VIDEO_ACTIVITY_BTN_ON_TAP');
+                                  'VIDEO_PAGE_X_X_X_TAB_BTN_ON_TAP');
                               logFirebaseEvent('Button_Backend-Call');
 
                               final videoUpdateData = createVideoRecordData(
@@ -241,7 +241,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                               await buttonVideoRecord!.reference
                                   .update(videoUpdateData);
                             },
-                            text: 'videoActivity',
+                            text: 'XXXTab',
                             options: FFButtonOptions(
                               width: 130,
                               height: 40,

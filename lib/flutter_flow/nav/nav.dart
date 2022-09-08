@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mavia/home_page/home_page.dart';
 import 'package:page_transition/page_transition.dart';
 import '../flutter_flow_theme.dart';
 import '../../backend/backend.dart';
@@ -205,20 +204,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => NewPage2Widget(),
             ),
             FFRoute(
-
               name: 'myApp',
               path: 'myApp',
               builder: (context, params) => MyAppWidget(),
-              ),
-            FFRoute(
-                name: 'HomePage',
-                path: 'HomePage',
-                builder: (context, params) => HomePage()
-
             )
-
-
-
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
       ],
