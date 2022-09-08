@@ -164,8 +164,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'video',
               path: 'video',
               builder: (context, params) => VideoWidget(
-                streamURL: params.getParam('streamURL', ParamType.String),
-                titleName: params.getParam('titleName', ParamType.String),
+                videoRef: params.getParam(
+                    'videoRef', ParamType.DocumentReference, 'video'),
+                startTime: params.getParam('startTime', ParamType.DateTime),
+                stTime: params.getParam(
+                    'stTime', ParamType.DocumentReference, 'myActivity'),
               ),
             ),
             FFRoute(
@@ -199,6 +202,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'NewPage2',
               path: 'newPage2',
               builder: (context, params) => NewPage2Widget(),
+            ),
+            FFRoute(
+              name: 'myApp',
+              path: 'myApp',
+              builder: (context, params) => MyAppWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
@@ -284,7 +292,12 @@ class FFParameters {
 
   Map<String, dynamic> futureParamValues = {};
 
-  bool get isEmpty => state.allParams.isEmpty;
+  // Parameters are empty if the params map is empty or if the only parameter
+  // present is the special extra parameter reserved for the transition info.
+  bool get isEmpty =>
+      state.allParams.isEmpty ||
+      (state.extraMap.length == 1 &&
+          state.extraMap.containsKey(kTransitionInfoKey));
   bool isAsyncParam(MapEntry<String, dynamic> param) =>
       asyncParams.containsKey(param.key) && param.value is String;
   bool get hasFutures => state.allParams.entries.any(isAsyncParam);

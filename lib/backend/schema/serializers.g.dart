@@ -8,9 +8,11 @@ part of 'serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(MusicRecord.serializer)
+      ..add(MyActivityRecord.serializer)
       ..add(PostRecord.serializer)
       ..add(StreamsRecord.serializer)
       ..add(UserRecord.serializer)
+      ..add(VideoActivityRecord.serializer)
       ..add(VideoRecord.serializer))
     .build();
 

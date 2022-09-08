@@ -11,12 +11,14 @@ import 'package:google_fonts/google_fonts.dart';
 class VideoWidget extends StatefulWidget {
   const VideoWidget({
     Key? key,
-    this.streamURL,
-    this.titleName,
+    this.videoRef,
+    this.startTime,
+    this.stTime,
   }) : super(key: key);
 
-  final String? streamURL;
-  final String? titleName;
+  final DocumentReference? videoRef;
+  final DateTime? startTime;
+  final DocumentReference? stTime;
 
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
@@ -40,12 +42,8 @@ class _VideoWidgetState extends State<VideoWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: StreamBuilder<List<VideoRecord>>(
-            stream: queryVideoRecord(
-              queryBuilder: (videoRecord) =>
-                  videoRecord.where('title', isEqualTo: widget.titleName),
-              singleRecord: true,
-            ),
+          child: StreamBuilder<VideoRecord>(
+            stream: VideoRecord.getDocument(widget.videoRef!),
             builder: (context, snapshot) {
               // Customize what your widget looks like when it's loading.
               if (!snapshot.hasData) {
@@ -59,14 +57,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                   ),
                 );
               }
-              List<VideoRecord> columnVideoRecordList = snapshot.data!;
-              // Return an empty Container when the document does not exist.
-              if (snapshot.data!.isEmpty) {
-                return Container();
-              }
-              final columnVideoRecord = columnVideoRecordList.isNotEmpty
-                  ? columnVideoRecordList.first
-                  : null;
+              final columnVideoRecord = snapshot.data!;
               return SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -97,7 +88,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                                   .set(videoCreateData);
                             },
                             child: FlutterFlowVideoPlayer(
-                              path: columnVideoRecord!.video!,
+                              path: columnVideoRecord.video!,
                               videoType: VideoType.network,
                               autoPlay: true,
                               looping: true,
@@ -110,36 +101,165 @@ class _VideoWidgetState extends State<VideoWidget> {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                             child: Text(
-                              columnVideoRecord!.title!,
+                              columnVideoRecord.title!,
                               style: FlutterFlowTheme.of(context).bodyText1,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    FFButtonWidget(
-                      onPressed: () async {
-                        logFirebaseEvent('VIDEO_PAGE_BUTTON_BTN_ON_TAP');
-                        logFirebaseEvent('Button_Navigate-To');
-                        context.pushNamed('intro');
-                        logFirebaseEvent('Button_Close-Dialog,-Drawer,-Etc');
-                        Navigator.pop(context);
+                    StreamBuilder<List<MyActivityRecord>>(
+                      stream: queryMyActivityRecord(
+                        parent: currentUserReference,
+                        queryBuilder: (myActivityRecord) => myActivityRecord
+                            .where('v_ref', isEqualTo: widget.videoRef)
+                            .where('sTime', isLessThan: getCurrentTimestamp),
+                        singleRecord: true,
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                              ),
+                            ),
+                          );
+                        }
+                        List<MyActivityRecord> buttonMyActivityRecordList =
+                            snapshot.data!;
+                        // Return an empty Container when the document does not exist.
+                        if (snapshot.data!.isEmpty) {
+                          return Container();
+                        }
+                        final buttonMyActivityRecord =
+                            buttonMyActivityRecordList.isNotEmpty
+                                ? buttonMyActivityRecordList.first
+                                : null;
+                        return FFButtonWidget(
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'VIDEO_PAGE_MY_ACTIVITY_BTN_ON_TAP');
+                            logFirebaseEvent('Button_Backend-Call');
+
+                            final myActivityUpdateData =
+                                createMyActivityRecordData(
+                              eTime: getCurrentTimestamp,
+                              vRef: buttonMyActivityRecord!.vRef,
+                            );
+                            await buttonMyActivityRecord!.reference
+                                .update(myActivityUpdateData);
+                          },
+                          text: 'myActivity',
+                          options: FFButtonOptions(
+                            width: 130,
+                            height: 40,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            textStyle:
+                                FlutterFlowTheme.of(context).subtitle2.override(
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                    ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        );
                       },
-                      text: 'Button',
-                      options: FFButtonOptions(
-                        width: 130,
-                        height: 40,
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        textStyle:
-                            FlutterFlowTheme.of(context).subtitle2.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.white,
-                                ),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          logFirebaseEvent('VIDEO_PAGE_GO_TO_LIST_BTN_ON_TAP');
+                          logFirebaseEvent('Button_Navigate-To');
+                          context.pushNamed('videoList');
+                        },
+                        text: 'Go to List',
+                        options: FFButtonOptions(
+                          width: 130,
+                          height: 40,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle:
+                              FlutterFlowTheme.of(context).subtitle2.override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                  ),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                      child: StreamBuilder<List<VideoRecord>>(
+                        stream: queryVideoRecord(
+                          singleRecord: true,
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CircularProgressIndicator(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                              ),
+                            );
+                          }
+                          List<VideoRecord> buttonVideoRecordList =
+                              snapshot.data!;
+                          // Return an empty Container when the document does not exist.
+                          if (snapshot.data!.isEmpty) {
+                            return Container();
+                          }
+                          final buttonVideoRecord =
+                              buttonVideoRecordList.isNotEmpty
+                                  ? buttonVideoRecordList.first
+                                  : null;
+                          return FFButtonWidget(
+                            onPressed: () async {
+                              logFirebaseEvent(
+                                  'VIDEO_PAGE_VIDEO_ACTIVITY_BTN_ON_TAP');
+                              logFirebaseEvent('Button_Backend-Call');
+
+                              final videoUpdateData = createVideoRecordData(
+                                playButtonClicked: getCurrentTimestamp,
+                              );
+                              await buttonVideoRecord!.reference
+                                  .update(videoUpdateData);
+                            },
+                            text: 'videoActivity',
+                            options: FFButtonOptions(
+                              width: 130,
+                              height: 40,
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .subtitle2
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    color: Colors.white,
+                                  ),
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],

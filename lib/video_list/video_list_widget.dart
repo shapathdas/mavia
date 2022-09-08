@@ -1,7 +1,8 @@
+import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../components/player_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -57,24 +58,23 @@ class _VideoListWidgetState extends State<VideoListWidget> {
                       onTap: () async {
                         logFirebaseEvent(
                             'VIDEO_LIST_Container_udggphl9_ON_TAP');
-                        logFirebaseEvent('Container_Bottom-Sheet');
-                        await showModalBottomSheet(
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          builder: (context) {
-                            return Padding(
-                              padding: MediaQuery.of(context).viewInsets,
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.8,
-                                child: PlayerWidget(
-                                  videoURL: columnVideoRecord.video,
-                                  videoNAME: columnVideoRecord.title,
-                                ),
-                              ),
-                            );
-                          },
+                        logFirebaseEvent('Container_Backend-Call');
+
+                        final myActivityCreateData = createMyActivityRecordData(
+                          vRef: columnVideoRecord.reference,
+                          sTime: getCurrentTimestamp,
+                          eTime: getCurrentTimestamp,
+                        );
+                        await MyActivityRecord.createDoc(currentUserReference!)
+                            .set(myActivityCreateData);
+                        logFirebaseEvent('Container_Navigate-To');
+                        context.pushNamed(
+                          'video',
+                          queryParams: {
+                            'videoRef': serializeParam(
+                                columnVideoRecord.reference,
+                                ParamType.DocumentReference),
+                          }.withoutNulls,
                         );
                       },
                       child: Container(

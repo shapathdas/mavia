@@ -62,21 +62,11 @@ class _SlidesstaclkWidgetState extends State<SlidesstaclkWidget> {
                       topCardWidthFraction: 0.99,
                       middleCardWidthFraction: 0.85,
                       botttomCardWidthFraction: 0.8,
-                      onSwipeFn: () {
-                        print('onSwipeFn called on SwipeableStack ...');
-                      },
-                      onLeftSwipe: () {
-                        print('onLeftSwipe called on SwipeableStack ...');
-                      },
-                      onRightSwipe: () {
-                        print('onRightSwipe called on SwipeableStack ...');
-                      },
-                      onUpSwipe: () {
-                        print('onUpSwipe called on SwipeableStack ...');
-                      },
-                      onDownSwipe: () {
-                        print('onDownSwipe called on SwipeableStack ...');
-                      },
+                      onSwipeFn: (index) {},
+                      onLeftSwipe: (index) {},
+                      onRightSwipe: (index) {},
+                      onUpSwipe: (index) {},
+                      onDownSwipe: (index) {},
                       itemBuilder: (context, swipeableStackIndex) {
                         final swipeableStackPostRecord =
                             swipeableStackPostRecordList[swipeableStackIndex];
