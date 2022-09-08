@@ -61,12 +61,12 @@ class _PlayerWidgetState extends State<PlayerWidget> {
               FlutterFlowVideoPlayer(
                 path: widget.videoURL!,
                 videoType: VideoType.network,
-                autoPlay: false,
+                autoPlay: true,
                 looping: true,
                 showControls: true,
                 allowFullScreen: true,
-                allowPlaybackSpeedMenu: false,
 
+                allowPlaybackSpeedMenu: true,
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
@@ -80,6 +80,8 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('PLAYER_COMP_BUTTON_BTN_ON_TAP');
+                    logFirebaseEvent('Button_Close-Dialog,-Drawer,-Etc');
+                    Navigator.pop(context);
                     logFirebaseEvent('Button_Navigate-To');
                     context.pushNamed('HomePage');
                   },

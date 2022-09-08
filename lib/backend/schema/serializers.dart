@@ -5,6 +5,8 @@ import 'post_record.dart';
 import 'music_record.dart';
 import 'video_record.dart';
 import 'streams_record.dart';
+import 'my_activity_record.dart';
+import 'video_activity_record.dart';
 
 import 'index.dart';
 
@@ -20,6 +22,8 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   MusicRecord,
   VideoRecord,
   StreamsRecord,
+  MyActivityRecord,
+  VideoActivityRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

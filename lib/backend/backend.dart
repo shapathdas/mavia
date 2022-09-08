@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:built_value/serializer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +9,8 @@ import 'schema/post_record.dart';
 import 'schema/music_record.dart';
 import 'schema/video_record.dart';
 import 'schema/streams_record.dart';
+import 'schema/my_activity_record.dart';
+import 'schema/video_activity_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -22,6 +23,8 @@ export 'schema/post_record.dart';
 export 'schema/music_record.dart';
 export 'schema/video_record.dart';
 export 'schema/streams_record.dart';
+export 'schema/my_activity_record.dart';
+export 'schema/video_activity_record.dart';
 
 /// Functions to query UserRecords (as a Stream and as a Future).
 Stream<List<UserRecord>> queryUserRecord({
@@ -233,6 +236,96 @@ Future<FFFirestorePage<StreamsRecord>> queryStreamsRecordPage({
       isStream: isStream,
     );
 
+/// Functions to query MyActivityRecords (as a Stream and as a Future).
+Stream<List<MyActivityRecord>> queryMyActivityRecord({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      MyActivityRecord.collection(parent),
+      MyActivityRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<MyActivityRecord>> queryMyActivityRecordOnce({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      MyActivityRecord.collection(parent),
+      MyActivityRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<MyActivityRecord>> queryMyActivityRecordPage({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      MyActivityRecord.collection(parent),
+      MyActivityRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query VideoActivityRecords (as a Stream and as a Future).
+Stream<List<VideoActivityRecord>> queryVideoActivityRecord({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      VideoActivityRecord.collection(parent),
+      VideoActivityRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<VideoActivityRecord>> queryVideoActivityRecordOnce({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      VideoActivityRecord.collection(parent),
+      VideoActivityRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<VideoActivityRecord>> queryVideoActivityRecordPage({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      VideoActivityRecord.collection(parent),
+      VideoActivityRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
 Stream<List<T>> queryCollection<T>(Query collection, Serializer<T> serializer,
     {Query Function(Query)? queryBuilder,
     int limit = -1,
@@ -278,12 +371,19 @@ Future<List<T>> queryCollectionOnce<T>(
       .toList());
 }
 
-extension WhereInExtension on Query {
-  Query whereIn(String field, List? list) => (list?.isEmpty ?? false)
-      //Ensures an empty list is returned for a query with no results
-      //since it is near impossible for list to have the same random double value
-      ? where(field, whereIn: [Random().nextDouble()])
+extension QueryExtension on Query {
+  Query whereIn(String field, List? list) => (list?.isEmpty ?? true)
+      ? where(field, whereIn: null)
       : where(field, whereIn: list);
+
+  Query whereNotIn(String field, List? list) => (list?.isEmpty ?? true)
+      ? where(field, whereNotIn: null)
+      : where(field, whereNotIn: list);
+
+  Query whereArrayContainsAny(String field, List? list) =>
+      (list?.isEmpty ?? true)
+          ? where(field, arrayContainsAny: null)
+          : where(field, arrayContainsAny: list);
 }
 
 class FFFirestorePage<T> {
