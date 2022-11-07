@@ -25,6 +25,12 @@ class _PreHomeWidgetState extends State<PreHomeWidget> {
   }
 
   @override
+  void dispose() {
+    textController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -66,6 +72,26 @@ class _PreHomeWidgetState extends State<PreHomeWidget> {
                       topRight: Radius.circular(4.0),
                     ),
                   ),
+                  errorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0),
+                    ),
+                  ),
+                  focusedErrorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0),
+                    ),
+                  ),
                 ),
                 style: FlutterFlowTheme.of(context).bodyText1,
               ),
@@ -94,10 +120,11 @@ class _PreHomeWidgetState extends State<PreHomeWidget> {
                 child: InkWell(
                   onTap: () async {
                     logFirebaseEvent('PRE_HOME_PAGE_Icon_k6w2twkk_ON_TAP');
-                    logFirebaseEvent('Icon_Auth');
+                    logFirebaseEvent('Icon_auth');
                     GoRouter.of(context).prepareAuthEvent();
                     await signOut();
-                    context.goNamedAuth('EmailLogin', mounted);
+
+                    context.goNamedAuth('phoneLogin', mounted);
                   },
                   child: Icon(
                     Icons.logout,

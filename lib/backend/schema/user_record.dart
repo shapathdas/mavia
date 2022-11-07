@@ -43,6 +43,8 @@ abstract class UserRecord implements Built<UserRecord, UserRecordBuilder> {
 
   int? get bottomSheet;
 
+  bool? get containerDisplay;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -58,7 +60,8 @@ abstract class UserRecord implements Built<UserRecord, UserRecordBuilder> {
     ..country = ''
     ..gender = ''
     ..displayName = ''
-    ..bottomSheet = 0;
+    ..bottomSheet = 0
+    ..containerDisplay = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('user');
@@ -94,6 +97,7 @@ Map<String, dynamic> createUserRecordData({
   String? gender,
   String? displayName,
   int? bottomSheet,
+  bool? containerDisplay,
 }) {
   final firestoreData = serializers.toFirestore(
     UserRecord.serializer,
@@ -111,7 +115,8 @@ Map<String, dynamic> createUserRecordData({
         ..country = country
         ..gender = gender
         ..displayName = displayName
-        ..bottomSheet = bottomSheet,
+        ..bottomSheet = bottomSheet
+        ..containerDisplay = containerDisplay,
     ),
   );
 

@@ -20,3 +20,6 @@ export 'video_thumbnail/video_thumbnail_widget.dart' show VideoThumbnailWidget;
 export 'video_details/video_details_widget.dart' show VideoDetailsWidget;
 export 'new_page2/new_page2_widget.dart' show NewPage2Widget;
 export 'my_app/my_app_widget.dart' show MyAppWidget;
+export 'phone_u/phone_u_widget.dart' show PhoneUWidget;
+export 'verify/verify_widget.dart' show VerifyWidget;
+export 'blank2/blank2_widget.dart' show Blank2Widget;

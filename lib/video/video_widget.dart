@@ -13,12 +13,10 @@ class VideoWidget extends StatefulWidget {
     Key? key,
     this.videoRef,
     this.startTime,
-    this.stTime,
   }) : super(key: key);
 
   final DocumentReference? videoRef;
   final DateTime? startTime;
-  final DocumentReference? stTime;
 
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
@@ -42,8 +40,13 @@ class _VideoWidgetState extends State<VideoWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: StreamBuilder<VideoRecord>(
-            stream: VideoRecord.getDocument(widget.videoRef!),
+          child: StreamBuilder<List<MyActivityRecord>>(
+            stream: queryMyActivityRecord(
+              parent: currentUserReference,
+              queryBuilder: (myActivityRecord) =>
+                  myActivityRecord.orderBy('sTime', descending: true),
+              singleRecord: true,
+            ),
             builder: (context, snapshot) {
               // Customize what your widget looks like when it's loading.
               if (!snapshot.hasData) {
@@ -57,7 +60,16 @@ class _VideoWidgetState extends State<VideoWidget> {
                   ),
                 );
               }
-              final columnVideoRecord = snapshot.data!;
+              List<MyActivityRecord> columnMyActivityRecordList =
+                  snapshot.data!;
+              // Return an empty Container when the document does not exist.
+              if (snapshot.data!.isEmpty) {
+                return Container();
+              }
+              final columnMyActivityRecord =
+                  columnMyActivityRecordList.isNotEmpty
+                      ? columnMyActivityRecordList.first
+                      : null;
               return SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -76,9 +88,9 @@ class _VideoWidgetState extends State<VideoWidget> {
                               logFirebaseEvent(
                                   'VIDEO_PAGE_VideoPlayer_5m3pxjbi_ON_TAP');
                               logFirebaseEvent(
-                                  'VideoPlayer_Google-Analytics-Event');
+                                  'VideoPlayer_google_analytics_event');
                               logFirebaseEvent('played');
-                              logFirebaseEvent('VideoPlayer_Backend-Call');
+                              logFirebaseEvent('VideoPlayer_backend_call');
 
                               final videoCreateData = createVideoRecordData(
                                 playButtonClicked: getCurrentTimestamp,
@@ -88,7 +100,8 @@ class _VideoWidgetState extends State<VideoWidget> {
                                   .set(videoCreateData);
                             },
                             child: FlutterFlowVideoPlayer(
-                              path: columnVideoRecord.video!,
+                              path:
+                                  'https://stream.mux.com/kBypj3TZ8nXg02M00Vzga1eVxn5LAzxmcnd6bbnRQVvIw.m',
                               videoType: VideoType.network,
                               autoPlay: true,
                               looping: true,
@@ -101,7 +114,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                             child: Text(
-                              columnVideoRecord.title!,
+                              columnMyActivityRecord!.mTitle!,
                               style: FlutterFlowTheme.of(context).bodyText1,
                             ),
                           ),
@@ -111,9 +124,8 @@ class _VideoWidgetState extends State<VideoWidget> {
                     StreamBuilder<List<MyActivityRecord>>(
                       stream: queryMyActivityRecord(
                         parent: currentUserReference,
-                        queryBuilder: (myActivityRecord) => myActivityRecord
-                            .where('v_ref', isEqualTo: widget.videoRef)
-                            .where('sTime', isLessThan: getCurrentTimestamp),
+                        queryBuilder: (myActivityRecord) =>
+                            myActivityRecord.orderBy('sTime', descending: true),
                         singleRecord: true,
                       ),
                       builder: (context, snapshot) {
@@ -144,7 +156,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                           onPressed: () async {
                             logFirebaseEvent(
                                 'VIDEO_PAGE_Y_Y_Y_Y_TAB_BTN_ON_TAP');
-                            logFirebaseEvent('Button_Backend-Call');
+                            logFirebaseEvent('Button_backend_call');
 
                             final myActivityUpdateData =
                                 createMyActivityRecordData(
@@ -178,7 +190,8 @@ class _VideoWidgetState extends State<VideoWidget> {
                       child: FFButtonWidget(
                         onPressed: () async {
                           logFirebaseEvent('VIDEO_PAGE_GO_TO_LIST_BTN_ON_TAP');
-                          logFirebaseEvent('Button_Navigate-To');
+                          logFirebaseEvent('Button_navigate_to');
+
                           context.pushNamed('videoList');
                         },
                         text: 'Go to List',
@@ -233,7 +246,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                             onPressed: () async {
                               logFirebaseEvent(
                                   'VIDEO_PAGE_X_X_X_TAB_BTN_ON_TAP');
-                              logFirebaseEvent('Button_Backend-Call');
+                              logFirebaseEvent('Button_backend_call');
 
                               final videoUpdateData = createVideoRecordData(
                                 playButtonClicked: getCurrentTimestamp,
@@ -260,6 +273,13 @@ class _VideoWidgetState extends State<VideoWidget> {
                             ),
                           );
                         },
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: Text(
+                        widget.startTime!.toString(),
+                        style: FlutterFlowTheme.of(context).bodyText1,
                       ),
                     ),
                   ],

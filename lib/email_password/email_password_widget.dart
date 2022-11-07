@@ -30,6 +30,7 @@ class _EmailPasswordWidgetState extends State<EmailPasswordWidget> {
   TextEditingController? aadharController;
   TextEditingController? emailController;
   TextEditingController? passwordController;
+
   late bool passwordVisibility;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -44,6 +45,14 @@ class _EmailPasswordWidgetState extends State<EmailPasswordWidget> {
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'EmailPassword'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    aadharController?.dispose();
+    emailController?.dispose();
+    passwordController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -96,6 +105,26 @@ class _EmailPasswordWidgetState extends State<EmailPasswordWidget> {
                                 topRight: Radius.circular(4.0),
                               ),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
                           ),
                           style: FlutterFlowTheme.of(context)
                               .bodyText1
@@ -108,6 +137,7 @@ class _EmailPasswordWidgetState extends State<EmailPasswordWidget> {
                             if (val == null || val.isEmpty) {
                               return 'Field is required';
                             }
+
                             if (val.length < 12) {
                               return 'Requires at least 12 characters.';
                             }
@@ -143,6 +173,26 @@ class _EmailPasswordWidgetState extends State<EmailPasswordWidget> {
                               borderSide: BorderSide(
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -202,6 +252,26 @@ class _EmailPasswordWidgetState extends State<EmailPasswordWidget> {
                                 topRight: Radius.circular(4.0),
                               ),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
                             suffixIcon: InkWell(
                               onTap: () => setState(
                                 () => passwordVisibility = !passwordVisibility,
@@ -235,7 +305,7 @@ class _EmailPasswordWidgetState extends State<EmailPasswordWidget> {
                   onPressed: () async {
                     logFirebaseEvent(
                         'EMAIL_PASSWORD_COMPLETE_SIGN_UP_BTN_ON_T');
-                    logFirebaseEvent('Button_Auth');
+                    logFirebaseEvent('Button_auth');
                     GoRouter.of(context).prepareAuthEvent();
 
                     final user = await createAccountWithEmail(

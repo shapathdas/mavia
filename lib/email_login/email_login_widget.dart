@@ -15,6 +15,7 @@ class EmailLoginWidget extends StatefulWidget {
 class _EmailLoginWidgetState extends State<EmailLoginWidget> {
   TextEditingController? emailController;
   TextEditingController? passwordController;
+
   late bool passwordVisibility;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -27,6 +28,13 @@ class _EmailLoginWidgetState extends State<EmailLoginWidget> {
     passwordVisibility = false;
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'EmailLogin'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    emailController?.dispose();
+    passwordController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -79,6 +87,26 @@ class _EmailLoginWidgetState extends State<EmailLoginWidget> {
                                 topRight: Radius.circular(4.0),
                               ),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
                           ),
                           style: FlutterFlowTheme.of(context)
                               .bodyText1
@@ -120,6 +148,26 @@ class _EmailLoginWidgetState extends State<EmailLoginWidget> {
                                 topRight: Radius.circular(4.0),
                               ),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
                             suffixIcon: InkWell(
                               onTap: () => setState(
                                 () => passwordVisibility = !passwordVisibility,
@@ -152,7 +200,7 @@ class _EmailLoginWidgetState extends State<EmailLoginWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('EMAIL_LOGIN_PAGE_SignIn_ON_TAP');
-                    logFirebaseEvent('SignIn_Auth');
+                    logFirebaseEvent('SignIn_auth');
                     GoRouter.of(context).prepareAuthEvent();
 
                     final user = await signInWithEmail(
@@ -164,7 +212,8 @@ class _EmailLoginWidgetState extends State<EmailLoginWidget> {
                       return;
                     }
 
-                    logFirebaseEvent('SignIn_Navigate-To');
+                    logFirebaseEvent('SignIn_navigate_to');
+
                     context.pushNamedAuth('intro', mounted);
                   },
                   text: 'Sign In',
@@ -189,7 +238,8 @@ class _EmailLoginWidgetState extends State<EmailLoginWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('EMAIL_LOGIN_PAGE_SignIn_ON_TAP');
-                    logFirebaseEvent('SignIn_Navigate-To');
+                    logFirebaseEvent('SignIn_navigate_to');
+
                     context.pushNamed('phoneLogin');
                   },
                   text: 'Sign In with Phone',

@@ -9,6 +9,8 @@ import '../../auth/firebase_user_provider.dart';
 
 import '../../index.dart';
 import '../../main.dart';
+import '../lat_lng.dart';
+import '../place.dart';
 import 'serialization_util.dart';
 
 export 'package:go_router/go_router.dart';
@@ -66,13 +68,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? IntroWidget() : EmailLoginWidget(),
+          appStateNotifier.loggedIn ? IntroWidget() : PhoneLoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? IntroWidget() : EmailLoginWidget(),
+              appStateNotifier.loggedIn ? IntroWidget() : PhoneLoginWidget(),
           routes: [
             FFRoute(
               name: 'Landing1',
@@ -165,10 +167,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'video',
               builder: (context, params) => VideoWidget(
                 videoRef: params.getParam(
-                    'videoRef', ParamType.DocumentReference, 'video'),
+                    'videoRef', ParamType.DocumentReference, false, 'video'),
                 startTime: params.getParam('startTime', ParamType.DateTime),
-                stTime: params.getParam(
-                    'stTime', ParamType.DocumentReference, 'myActivity'),
               ),
             ),
             FFRoute(
@@ -207,6 +207,21 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'myApp',
               path: 'myApp',
               builder: (context, params) => MyAppWidget(),
+            ),
+            FFRoute(
+              name: 'phoneU',
+              path: 'phoneU',
+              builder: (context, params) => PhoneUWidget(),
+            ),
+            FFRoute(
+              name: 'verify',
+              path: 'verify',
+              builder: (context, params) => VerifyWidget(),
+            ),
+            FFRoute(
+              name: 'blank2',
+              path: 'blank2',
+              builder: (context, params) => Blank2Widget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
@@ -315,9 +330,10 @@ class FFParameters {
         ),
       ).onError((_, __) => [false]).then((v) => v.every((e) => e));
 
-  dynamic getParam(
+  dynamic getParam<T>(
     String paramName,
     ParamType type, [
+    bool isList = false,
     String? collectionName,
   ]) {
     if (futureParamValues.containsKey(paramName)) {
@@ -332,7 +348,7 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam(param, type, collectionName);
+    return deserializeParam<T>(param, type, isList, collectionName);
   }
 }
 
@@ -365,7 +381,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/emailLogin';
+            return '/phoneLogin';
           }
           return null;
         },
