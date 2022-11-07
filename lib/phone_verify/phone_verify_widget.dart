@@ -26,6 +26,12 @@ class _PhoneVerifyWidgetState extends State<PhoneVerifyWidget> {
   }
 
   @override
+  void dispose() {
+    oneTimePassController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -74,6 +80,26 @@ class _PhoneVerifyWidgetState extends State<PhoneVerifyWidget> {
                                 topRight: Radius.circular(4.0),
                               ),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
                           ),
                           style: FlutterFlowTheme.of(context)
                               .bodyText1
@@ -93,7 +119,7 @@ class _PhoneVerifyWidgetState extends State<PhoneVerifyWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('PHONE_VERIFY_PAGE_VERIFY_BTN_ON_TAP');
-                    logFirebaseEvent('Button_Auth');
+                    logFirebaseEvent('Button_auth');
                     GoRouter.of(context).prepareAuthEvent();
                     final smsCodeVal = oneTimePassController!.text;
                     if (smsCodeVal == null || smsCodeVal.isEmpty) {
@@ -112,7 +138,8 @@ class _PhoneVerifyWidgetState extends State<PhoneVerifyWidget> {
                       return;
                     }
 
-                    logFirebaseEvent('Button_Navigate-To');
+                    logFirebaseEvent('Button_navigate_to');
+
                     context.pushNamedAuth('PreHome', mounted);
                   },
                   text: 'Verify',

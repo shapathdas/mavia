@@ -13,6 +13,7 @@ class Landing1Widget extends StatefulWidget {
 
 class _Landing1WidgetState extends State<Landing1Widget> {
   TextEditingController? textController;
+
   late bool passwordVisibility;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -24,6 +25,12 @@ class _Landing1WidgetState extends State<Landing1Widget> {
     textController = TextEditingController();
     passwordVisibility = false;
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    textController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -116,6 +123,29 @@ class _Landing1WidgetState extends State<Landing1Widget> {
                                               topRight: Radius.circular(4.0),
                                             ),
                                           ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                              topLeft: Radius.circular(4.0),
+                                              topRight: Radius.circular(4.0),
+                                            ),
+                                          ),
                                           contentPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   2, 2, 2, 2),
@@ -150,6 +180,7 @@ class _Landing1WidgetState extends State<Landing1Widget> {
                                           if (val == null || val.isEmpty) {
                                             return 'Field is required';
                                           }
+
                                           if (val.length < 1) {
                                             return 'Requires at least 1 characters.';
                                           }
@@ -179,10 +210,11 @@ class _Landing1WidgetState extends State<Landing1Widget> {
                     onPressed: () async {
                       logFirebaseEvent('LANDING1_PAGE_ENTER_BTN_ON_TAP');
                       if (textController!.text == '169262') {
-                        logFirebaseEvent('Button_Navigate-To');
+                        logFirebaseEvent('Button_navigate_to');
+
                         context.pushNamed('intro');
                       } else {
-                        logFirebaseEvent('Button_Alert-Dialog');
+                        logFirebaseEvent('Button_alert_dialog');
                         await showDialog(
                           context: context,
                           builder: (alertDialogContext) {

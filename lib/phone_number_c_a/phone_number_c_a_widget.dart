@@ -42,6 +42,13 @@ class _PhoneNumberCAWidgetState extends State<PhoneNumberCAWidget> {
   }
 
   @override
+  void dispose() {
+    aadharController?.dispose();
+    phoneNumberController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -91,6 +98,26 @@ class _PhoneNumberCAWidgetState extends State<PhoneNumberCAWidget> {
                                 topRight: Radius.circular(4.0),
                               ),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
                           ),
                           style: FlutterFlowTheme.of(context)
                               .bodyText1
@@ -133,6 +160,26 @@ class _PhoneNumberCAWidgetState extends State<PhoneNumberCAWidget> {
                                 topRight: Radius.circular(4.0),
                               ),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
                           ),
                           style: FlutterFlowTheme.of(context)
                               .bodyText1
@@ -153,7 +200,7 @@ class _PhoneNumberCAWidgetState extends State<PhoneNumberCAWidget> {
                   onPressed: () async {
                     logFirebaseEvent(
                         'PHONE_NUMBER_C_A_REQUEST_ONE_TIME_PASSWO');
-                    logFirebaseEvent('Button_Auth');
+                    logFirebaseEvent('Button_auth');
                     final phoneNumberVal = phoneNumberController!.text;
                     if (phoneNumberVal == null ||
                         phoneNumberVal.isEmpty ||

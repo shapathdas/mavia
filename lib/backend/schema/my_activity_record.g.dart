@@ -43,6 +43,20 @@ class _$MyActivityRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
+    value = object.videolink;
+    if (value != null) {
+      result
+        ..add('videolink')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.mTitle;
+    if (value != null) {
+      result
+        ..add('m_title')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -80,6 +94,14 @@ class _$MyActivityRecordSerializer
           result.eTime = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
+        case 'videolink':
+          result.videolink = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'm_title':
+          result.mTitle = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -101,13 +123,23 @@ class _$MyActivityRecord extends MyActivityRecord {
   @override
   final DateTime? eTime;
   @override
+  final String? videolink;
+  @override
+  final String? mTitle;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$MyActivityRecord(
           [void Function(MyActivityRecordBuilder)? updates]) =>
       (new MyActivityRecordBuilder()..update(updates))._build();
 
-  _$MyActivityRecord._({this.vRef, this.sTime, this.eTime, this.ffRef})
+  _$MyActivityRecord._(
+      {this.vRef,
+      this.sTime,
+      this.eTime,
+      this.videolink,
+      this.mTitle,
+      this.ffRef})
       : super._();
 
   @override
@@ -125,13 +157,18 @@ class _$MyActivityRecord extends MyActivityRecord {
         vRef == other.vRef &&
         sTime == other.sTime &&
         eTime == other.eTime &&
+        videolink == other.videolink &&
+        mTitle == other.mTitle &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, vRef.hashCode), sTime.hashCode), eTime.hashCode),
+        $jc(
+            $jc($jc($jc($jc(0, vRef.hashCode), sTime.hashCode), eTime.hashCode),
+                videolink.hashCode),
+            mTitle.hashCode),
         ffRef.hashCode));
   }
 
@@ -141,6 +178,8 @@ class _$MyActivityRecord extends MyActivityRecord {
           ..add('vRef', vRef)
           ..add('sTime', sTime)
           ..add('eTime', eTime)
+          ..add('videolink', videolink)
+          ..add('mTitle', mTitle)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -162,6 +201,14 @@ class MyActivityRecordBuilder
   DateTime? get eTime => _$this._eTime;
   set eTime(DateTime? eTime) => _$this._eTime = eTime;
 
+  String? _videolink;
+  String? get videolink => _$this._videolink;
+  set videolink(String? videolink) => _$this._videolink = videolink;
+
+  String? _mTitle;
+  String? get mTitle => _$this._mTitle;
+  set mTitle(String? mTitle) => _$this._mTitle = mTitle;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -176,6 +223,8 @@ class MyActivityRecordBuilder
       _vRef = $v.vRef;
       _sTime = $v.sTime;
       _eTime = $v.eTime;
+      _videolink = $v.videolink;
+      _mTitle = $v.mTitle;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -199,7 +248,12 @@ class MyActivityRecordBuilder
   _$MyActivityRecord _build() {
     final _$result = _$v ??
         new _$MyActivityRecord._(
-            vRef: vRef, sTime: sTime, eTime: eTime, ffRef: ffRef);
+            vRef: vRef,
+            sTime: sTime,
+            eTime: eTime,
+            videolink: videolink,
+            mTitle: mTitle,
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

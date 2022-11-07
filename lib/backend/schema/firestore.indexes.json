@@ -1,18 +1,3 @@
 {
-  "indexes": [
-    {
-      "collectionGroup": "myActivity",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "v_ref",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "sTime",
-          "order": "ASCENDING"
-        }
-      ]
-    }
-  ]
+  "indexes": []
 }

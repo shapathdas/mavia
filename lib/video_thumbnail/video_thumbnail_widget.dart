@@ -23,7 +23,9 @@ class VideoThumbnailWidget extends StatefulWidget {
 }
 
 class _VideoThumbnailWidgetState extends State<VideoThumbnailWidget> {
+  bool isMediaUploading = false;
   String uploadedFileUrl = '';
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -56,7 +58,7 @@ class _VideoThumbnailWidgetState extends State<VideoThumbnailWidget> {
                         onPressed: () async {
                           logFirebaseEvent(
                               'VIDEO_THUMBNAIL_UPLOAD_THUMBNAIL_BTN_ON_');
-                          logFirebaseEvent('Button_Upload-Photo-Video');
+                          logFirebaseEvent('Button_upload_photo_video');
                           final selectedMedia = await selectMedia(
                             maxWidth: 1920.00,
                             maxHeight: 1080.00,
@@ -66,45 +68,57 @@ class _VideoThumbnailWidgetState extends State<VideoThumbnailWidget> {
                           if (selectedMedia != null &&
                               selectedMedia.every((m) =>
                                   validateFileFormat(m.storagePath, context))) {
-                            showUploadMessage(
-                              context,
-                              'Uploading file...',
-                              showLoading: true,
-                            );
-                            final downloadUrls = (await Future.wait(
-                                    selectedMedia.map((m) async =>
-                                        await uploadData(
-                                            m.storagePath, m.bytes))))
-                                .where((u) => u != null)
-                                .map((u) => u!)
-                                .toList();
-                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                            setState(() => isMediaUploading = true);
+                            var downloadUrls = <String>[];
+                            try {
+                              showUploadMessage(
+                                context,
+                                'Uploading file...',
+                                showLoading: true,
+                              );
+                              downloadUrls = (await Future.wait(
+                                selectedMedia.map(
+                                  (m) async =>
+                                      await uploadData(m.storagePath, m.bytes),
+                                ),
+                              ))
+                                  .where((u) => u != null)
+                                  .map((u) => u!)
+                                  .toList();
+                            } finally {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+                              isMediaUploading = false;
+                            }
                             if (downloadUrls.length == selectedMedia.length) {
                               setState(
                                   () => uploadedFileUrl = downloadUrls.first);
-                              showUploadMessage(
-                                context,
-                                'Success!',
-                              );
+                              showUploadMessage(context, 'Success!');
                             } else {
+                              setState(() {});
                               showUploadMessage(
-                                context,
-                                'Failed to upload media',
-                              );
+                                  context, 'Failed to upload media');
                               return;
                             }
                           }
 
-                          logFirebaseEvent('Button_Navigate-To');
+                          logFirebaseEvent('Button_navigate_to');
+
                           context.pushNamed(
                             'videoDetails',
                             queryParams: {
                               'upVid': serializeParam(
-                                  widget.upVid, ParamType.String),
+                                widget.upVid,
+                                ParamType.String,
+                              ),
                               'responseAPI': serializeParam(
-                                  widget.responseAPI, ParamType.JSON),
+                                widget.responseAPI,
+                                ParamType.JSON,
+                              ),
                               'imgURL': serializeParam(
-                                  uploadedFileUrl, ParamType.String),
+                                uploadedFileUrl,
+                                ParamType.String,
+                              ),
                             }.withoutNulls,
                           );
                         },
@@ -136,7 +150,8 @@ class _VideoThumbnailWidgetState extends State<VideoThumbnailWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'VIDEO_THUMBNAIL_Icon_3tyu43vh_ON_TAP');
-                              logFirebaseEvent('Icon_Navigate-To');
+                              logFirebaseEvent('Icon_navigate_to');
+
                               context.pushNamed('EmailLogin');
                             },
                             child: Icon(

@@ -35,6 +35,13 @@ class _CreateAccount2WidgetState extends State<CreateAccount2Widget> {
   }
 
   @override
+  void dispose() {
+    firstNameController?.dispose();
+    lastNameController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -87,6 +94,26 @@ class _CreateAccount2WidgetState extends State<CreateAccount2Widget> {
                                   topRight: Radius.circular(4.0),
                                 ),
                               ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyText1
@@ -123,6 +150,26 @@ class _CreateAccount2WidgetState extends State<CreateAccount2Widget> {
                                 borderSide: BorderSide(
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: const BorderRadius.only(
@@ -223,7 +270,7 @@ class _CreateAccount2WidgetState extends State<CreateAccount2Widget> {
                                     onTap: () async {
                                       logFirebaseEvent(
                                           'CREATE_ACCOUNT2_Icon_az1wqaam_ON_TAP');
-                                      logFirebaseEvent('Icon_Date-Time-Picker');
+                                      logFirebaseEvent('Icon_date_time_picker');
                                       if (kIsWeb) {
                                         final _datePickedDate =
                                             await showDatePicker(
@@ -364,20 +411,31 @@ class _CreateAccount2WidgetState extends State<CreateAccount2Widget> {
                     onPressed: () async {
                       logFirebaseEvent(
                           'CREATE_ACCOUNT2_CREATE_ACCOUNT_WITH_EMAI');
-                      logFirebaseEvent('Button_Navigate-To');
+                      logFirebaseEvent('Button_navigate_to');
+
                       context.pushNamed(
                         'EmailPassword',
                         queryParams: {
                           'firstName': serializeParam(
-                              firstNameController!.text, ParamType.String),
+                            firstNameController!.text,
+                            ParamType.String,
+                          ),
                           'lastName': serializeParam(
-                              lastNameController!.text, ParamType.String),
-                          'dateOfBirth':
-                              serializeParam(datePicked, ParamType.DateTime),
-                          'gender':
-                              serializeParam(genderValue, ParamType.String),
-                          'country':
-                              serializeParam(countryValue, ParamType.String),
+                            lastNameController!.text,
+                            ParamType.String,
+                          ),
+                          'dateOfBirth': serializeParam(
+                            datePicked,
+                            ParamType.DateTime,
+                          ),
+                          'gender': serializeParam(
+                            genderValue,
+                            ParamType.String,
+                          ),
+                          'country': serializeParam(
+                            countryValue,
+                            ParamType.String,
+                          ),
                         }.withoutNulls,
                       );
                     },
@@ -407,20 +465,31 @@ class _CreateAccount2WidgetState extends State<CreateAccount2Widget> {
                     onPressed: () async {
                       logFirebaseEvent(
                           'CREATE_ACCOUNT2_CREATE_ACCOUNT_WITH_PHON');
-                      logFirebaseEvent('Button_Navigate-To');
+                      logFirebaseEvent('Button_navigate_to');
+
                       context.pushNamed(
                         'phoneNumberCA',
                         queryParams: {
                           'firstNameP': serializeParam(
-                              firstNameController!.text, ParamType.String),
+                            firstNameController!.text,
+                            ParamType.String,
+                          ),
                           'lastNameP': serializeParam(
-                              lastNameController!.text, ParamType.String),
-                          'countryP':
-                              serializeParam(countryValue, ParamType.String),
-                          'genderP':
-                              serializeParam(genderValue, ParamType.String),
-                          'dateOfBrithP':
-                              serializeParam(datePicked, ParamType.DateTime),
+                            lastNameController!.text,
+                            ParamType.String,
+                          ),
+                          'countryP': serializeParam(
+                            countryValue,
+                            ParamType.String,
+                          ),
+                          'genderP': serializeParam(
+                            genderValue,
+                            ParamType.String,
+                          ),
+                          'dateOfBrithP': serializeParam(
+                            datePicked,
+                            ParamType.DateTime,
+                          ),
                         }.withoutNulls,
                       );
                     },

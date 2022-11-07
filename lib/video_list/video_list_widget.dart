@@ -58,24 +58,33 @@ class _VideoListWidgetState extends State<VideoListWidget> {
                       onTap: () async {
                         logFirebaseEvent(
                             'VIDEO_LIST_Container_udggphl9_ON_TAP');
-                        logFirebaseEvent('Container_Backend-Call');
+                        logFirebaseEvent('Container_navigate_to');
+
+                        context.pushNamed(
+                          'video',
+                          queryParams: {
+                            'videoRef': serializeParam(
+                              columnVideoRecord.reference,
+                              ParamType.DocumentReference,
+                            ),
+                            'startTime': serializeParam(
+                              getCurrentTimestamp,
+                              ParamType.DateTime,
+                            ),
+                          }.withoutNulls,
+                        );
+
+                        logFirebaseEvent('Container_backend_call');
 
                         final myActivityCreateData = createMyActivityRecordData(
                           vRef: columnVideoRecord.reference,
                           sTime: getCurrentTimestamp,
                           eTime: getCurrentTimestamp,
+                          videolink: columnVideoRecord.video,
+                          mTitle: columnVideoRecord.title,
                         );
                         await MyActivityRecord.createDoc(currentUserReference!)
                             .set(myActivityCreateData);
-                        logFirebaseEvent('Container_Navigate-To');
-                        context.pushNamed(
-                          'video',
-                          queryParams: {
-                            'videoRef': serializeParam(
-                                columnVideoRecord.reference,
-                                ParamType.DocumentReference),
-                          }.withoutNulls,
-                        );
                       },
                       child: Container(
                         width: 400,

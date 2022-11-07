@@ -15,45 +15,21 @@ class MusicWidget extends StatefulWidget {
 }
 
 class _MusicWidgetState extends State<MusicWidget> {
-  late final StopWatchTimer timerController;
-  late String timerValue;
-  late int timerMilliseconds;
+  StopWatchTimer? timerController;
+  String? timerValue;
+  int? timerMilliseconds;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    timerMilliseconds = 10;
-    timerValue = StopWatchTimer.getDisplayTime(
-      0,
-      hours: true,
-      minute: true,
-      second: true,
-      milliSecond: false,
-    );
-    timerController = StopWatchTimer(
-      mode: StopWatchMode.countDown,
-      presetMillisecond: 10,
-      onChange: (value) {
-        setState(() {
-          timerMilliseconds = value;
-          timerValue = StopWatchTimer.getDisplayTime(
-            value,
-            hours: true,
-            minute: true,
-            second: true,
-            milliSecond: false,
-          );
-        });
-      },
-    );
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'music'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
-    timerController.dispose();
+    timerController?.dispose();
     super.dispose();
   }
 
@@ -89,7 +65,7 @@ class _MusicWidgetState extends State<MusicWidget> {
                           audio: Audio.network(
                             'https://filesamples.com/samples/audio/mp3/sample3.mp3',
                             metas: Metas(
-                              id: 'sample3.mp3-671pgr7a',
+                              id: 'sample3.mp3-7yfuwkjq',
                             ),
                           ),
                           titleTextStyle:
@@ -117,8 +93,29 @@ class _MusicWidgetState extends State<MusicWidget> {
                       ],
                     ),
                     FlutterFlowTimer(
-                      timerValue: timerValue,
-                      timer: timerController,
+                      timerValue: timerValue ??= StopWatchTimer.getDisplayTime(
+                        timerMilliseconds ??= 10,
+                        hours: true,
+                        minute: true,
+                        second: true,
+                        milliSecond: false,
+                      ),
+                      timer: timerController ??= StopWatchTimer(
+                        mode: StopWatchMode.countDown,
+                        presetMillisecond: timerMilliseconds ??= 10,
+                        onChange: (value) {
+                          setState(() {
+                            timerMilliseconds = value;
+                            timerValue = StopWatchTimer.getDisplayTime(
+                              value,
+                              hours: true,
+                              minute: true,
+                              second: true,
+                              milliSecond: false,
+                            );
+                          });
+                        },
+                      ),
                       textAlign: TextAlign.start,
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',

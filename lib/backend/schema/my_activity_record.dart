@@ -18,13 +18,20 @@ abstract class MyActivityRecord
 
   DateTime? get eTime;
 
+  String? get videolink;
+
+  @BuiltValueField(wireName: 'm_title')
+  String? get mTitle;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
 
   DocumentReference get parentReference => reference.parent.parent!;
 
-  static void _initializeBuilder(MyActivityRecordBuilder builder) => builder;
+  static void _initializeBuilder(MyActivityRecordBuilder builder) => builder
+    ..videolink = ''
+    ..mTitle = '';
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
       parent != null
@@ -56,6 +63,8 @@ Map<String, dynamic> createMyActivityRecordData({
   DocumentReference? vRef,
   DateTime? sTime,
   DateTime? eTime,
+  String? videolink,
+  String? mTitle,
 }) {
   final firestoreData = serializers.toFirestore(
     MyActivityRecord.serializer,
@@ -63,7 +72,9 @@ Map<String, dynamic> createMyActivityRecordData({
       (m) => m
         ..vRef = vRef
         ..sTime = sTime
-        ..eTime = eTime,
+        ..eTime = eTime
+        ..videolink = videolink
+        ..mTitle = mTitle,
     ),
   );
 

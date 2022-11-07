@@ -39,6 +39,12 @@ class _VideoDetailsWidgetState extends State<VideoDetailsWidget> {
   }
 
   @override
+  void dispose() {
+    textController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -60,7 +66,7 @@ class _VideoDetailsWidgetState extends State<VideoDetailsWidget> {
                         onPressed: () async {
                           logFirebaseEvent(
                               'VIDEO_DETAILS_COMPLETE_UPLOAD_BTN_ON_TAP');
-                          logFirebaseEvent('Button_Backend-Call');
+                          logFirebaseEvent('Button_backend_call');
 
                           final videoCreateData = createVideoRecordData(
                             video: 'https://stream.mux.com/${getJsonField(
@@ -77,7 +83,8 @@ class _VideoDetailsWidgetState extends State<VideoDetailsWidget> {
                           await VideoRecord.collection
                               .doc()
                               .set(videoCreateData);
-                          logFirebaseEvent('Button_Navigate-To');
+                          logFirebaseEvent('Button_navigate_to');
+
                           context.pushNamed('intro');
                         },
                         text: 'Complete Upload',
@@ -108,7 +115,8 @@ class _VideoDetailsWidgetState extends State<VideoDetailsWidget> {
                             onTap: () async {
                               logFirebaseEvent(
                                   'VIDEO_DETAILS_PAGE_Icon_780kxz1e_ON_TAP');
-                              logFirebaseEvent('Icon_Navigate-To');
+                              logFirebaseEvent('Icon_navigate_to');
+
                               context.pushNamed('EmailLogin');
                             },
                             child: Icon(
@@ -163,6 +171,26 @@ class _VideoDetailsWidgetState extends State<VideoDetailsWidget> {
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0x00000000),
+                        width: 1,
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(4.0),
+                        topRight: Radius.circular(4.0),
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0x00000000),
+                        width: 1,
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(4.0),
+                        topRight: Radius.circular(4.0),
+                      ),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Color(0x00000000),
                         width: 1,

@@ -79,9 +79,10 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('PLAYER_COMP_BUTTON_BTN_ON_TAP');
-                    logFirebaseEvent('Button_Close-Dialog,-Drawer,-Etc');
+                    logFirebaseEvent('Button_close_dialog,_drawer,_etc');
                     Navigator.pop(context);
-                    logFirebaseEvent('Button_Navigate-To');
+                    logFirebaseEvent('Button_navigate_to');
+
                     context.pushNamed('videoList');
                   },
                   text: 'Button',

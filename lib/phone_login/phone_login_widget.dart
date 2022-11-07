@@ -26,6 +26,12 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
   }
 
   @override
+  void dispose() {
+    phoneNumberController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
@@ -74,6 +80,26 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                                 topRight: Radius.circular(4.0),
                               ),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
                           ),
                           style: FlutterFlowTheme.of(context)
                               .bodyText1
@@ -93,7 +119,7 @@ class _PhoneLoginWidgetState extends State<PhoneLoginWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('PHONE_LOGIN_REQUEST_O_T_P_BTN_ON_TAP');
-                    logFirebaseEvent('Button_Auth');
+                    logFirebaseEvent('Button_auth');
                     final phoneNumberVal = phoneNumberController!.text;
                     if (phoneNumberVal == null ||
                         phoneNumberVal.isEmpty ||

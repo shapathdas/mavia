@@ -108,6 +108,13 @@ class _$UserRecordSerializer implements StructuredSerializer<UserRecord> {
         ..add('bottomSheet')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.containerDisplay;
+    if (value != null) {
+      result
+        ..add('containerDisplay')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -182,6 +189,10 @@ class _$UserRecordSerializer implements StructuredSerializer<UserRecord> {
           result.bottomSheet = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'containerDisplay':
+          result.containerDisplay = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -223,6 +234,8 @@ class _$UserRecord extends UserRecord {
   @override
   final int? bottomSheet;
   @override
+  final bool? containerDisplay;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UserRecord([void Function(UserRecordBuilder)? updates]) =>
@@ -242,6 +255,7 @@ class _$UserRecord extends UserRecord {
       this.gender,
       this.displayName,
       this.bottomSheet,
+      this.containerDisplay,
       this.ffRef})
       : super._();
 
@@ -269,6 +283,7 @@ class _$UserRecord extends UserRecord {
         gender == other.gender &&
         displayName == other.displayName &&
         bottomSheet == other.bottomSheet &&
+        containerDisplay == other.containerDisplay &&
         ffRef == other.ffRef;
   }
 
@@ -286,19 +301,23 @@ class _$UserRecord extends UserRecord {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc($jc(0, email.hashCode),
-                                                        photoUrl.hashCode),
-                                                    uid.hashCode),
-                                                createdTime.hashCode),
-                                            phoneNumber.hashCode),
-                                        firstName.hashCode),
-                                    lastName.hashCode),
-                                aadhar.hashCode),
-                            dateOfBirth.hashCode),
-                        country.hashCode),
-                    gender.hashCode),
-                displayName.hashCode),
-            bottomSheet.hashCode),
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(0,
+                                                                email.hashCode),
+                                                            photoUrl.hashCode),
+                                                        uid.hashCode),
+                                                    createdTime.hashCode),
+                                                phoneNumber.hashCode),
+                                            firstName.hashCode),
+                                        lastName.hashCode),
+                                    aadhar.hashCode),
+                                dateOfBirth.hashCode),
+                            country.hashCode),
+                        gender.hashCode),
+                    displayName.hashCode),
+                bottomSheet.hashCode),
+            containerDisplay.hashCode),
         ffRef.hashCode));
   }
 
@@ -318,6 +337,7 @@ class _$UserRecord extends UserRecord {
           ..add('gender', gender)
           ..add('displayName', displayName)
           ..add('bottomSheet', bottomSheet)
+          ..add('containerDisplay', containerDisplay)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -378,6 +398,11 @@ class UserRecordBuilder implements Builder<UserRecord, UserRecordBuilder> {
   int? get bottomSheet => _$this._bottomSheet;
   set bottomSheet(int? bottomSheet) => _$this._bottomSheet = bottomSheet;
 
+  bool? _containerDisplay;
+  bool? get containerDisplay => _$this._containerDisplay;
+  set containerDisplay(bool? containerDisplay) =>
+      _$this._containerDisplay = containerDisplay;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -402,6 +427,7 @@ class UserRecordBuilder implements Builder<UserRecord, UserRecordBuilder> {
       _gender = $v.gender;
       _displayName = $v.displayName;
       _bottomSheet = $v.bottomSheet;
+      _containerDisplay = $v.containerDisplay;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -438,6 +464,7 @@ class UserRecordBuilder implements Builder<UserRecord, UserRecordBuilder> {
             gender: gender,
             displayName: displayName,
             bottomSheet: bottomSheet,
+            containerDisplay: containerDisplay,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

@@ -23,6 +23,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
   TextEditingController? phoneNumberController;
   TextEditingController? emailController;
   TextEditingController? passwordController;
+
   late bool passwordVisibility;
   String? countryValue;
   TextEditingController? aadharController;
@@ -45,6 +46,19 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'createAccount'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    aadharController?.dispose();
+    dateOfBirthController?.dispose();
+    firstNameController?.dispose();
+    lastNameController?.dispose();
+    phoneNumberController?.dispose();
+    emailController?.dispose();
+    passwordController?.dispose();
+    panController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -97,6 +111,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 topRight: Radius.circular(4.0),
                               ),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
                           ),
                           style: FlutterFlowTheme.of(context)
                               .bodyText1
@@ -138,6 +172,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 topRight: Radius.circular(4.0),
                               ),
                             ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
                           ),
                           style: FlutterFlowTheme.of(context)
                               .bodyText1
@@ -155,7 +209,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                           onFieldSubmitted: (_) async {
                             logFirebaseEvent(
                                 'CREATE_ACCOUNT_DateOfBirth_ON_TEXTFIELD_');
-                            logFirebaseEvent('DateOfBirth_Date-Time-Picker');
+                            logFirebaseEvent('DateOfBirth_date_time_picker');
                             if (kIsWeb) {
                               final _datePickedDate = await showDatePicker(
                                 context: context,
@@ -205,6 +259,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                               borderSide: BorderSide(
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
@@ -300,6 +374,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   topRight: Radius.circular(4.0),
                                 ),
                               ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyText1
@@ -344,6 +438,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   topRight: Radius.circular(4.0),
                                 ),
                               ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyText1
@@ -381,6 +495,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 borderSide: BorderSide(
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
                                   width: 1,
                                 ),
                                 borderRadius: const BorderRadius.only(
@@ -484,6 +618,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   topRight: Radius.circular(4.0),
                                 ),
                               ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 1,
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(4.0),
+                                  topRight: Radius.circular(4.0),
+                                ),
+                              ),
                             ),
                             style: FlutterFlowTheme.of(context)
                                 .bodyText1
@@ -519,6 +673,26 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                               borderSide: BorderSide(
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 1,
+                              ),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
                                 width: 1,
                               ),
                               borderRadius: const BorderRadius.only(
